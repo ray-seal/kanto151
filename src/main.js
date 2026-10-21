@@ -1,17 +1,28 @@
-import { POKEMON } from './data/pokemon.js';
-import { loadCollection, saveCollection } from './storage.js';
+import { POKEMON, REGIONS } from './data/pokemon.js';
+import { loadProfiles, createProfile, switchProfile, loadProfileCollection, saveProfileCollection } from './storage.js';
 import { getStatus, setFlag, getStats } from './collection.js';
 import { applyView, FILTERS, SORTS } from './filter.js';
 
 const activePokemon = POKEMON;
-let collection = loadCollection();
-const view = { query: '', filter: 'all', sort: 'dex' };
+let profiles = loadProfiles();
+let collection = loadProfileCollection(profiles.activeId);
+const view = { query: '', filter: 'all', sort: 'dex', region: 'all' };
 
 const $ = (id) => document.getElementById(id);
 const list = $('list');
 const search = $('search');
 const filterSel = $('filter');
 const sortSel = $('sort');
+const regionSel = $('region');
+const profileSel = $('profile');
+
+regionSel.append(new Option('All Pokémon', 'all'));
+for (const r of REGIONS) regionSel.append(new Option(r, r));
+
+function renderProfiles() {
+  profileSel.replaceChildren(...Object.values(profiles.profiles).map((p) => new Option(p.name, p.id)));
+  profileSel.value = profiles.activeId;
+}
 
 function fill(select, options) {
   for (const [value, { label }] of Object.entries(options)) {
@@ -24,7 +35,9 @@ fill(sortSel, SORTS);
 const pad = (n) => String(n).padStart(3, '0');
 
 function renderStats() {
-  const s = getStats(activePokemon, collection);
+  const scoped = view.region === 'all' ? activePokemon : activePokemon.filter((p) => p.region === view.region);
+  const s = getStats(scoped, collection);
+  $('scope').textContent = `${view.region === 'all' ? 'All Pokémon' : view.region}: ${profiles.profiles[profiles.activeId].name}`;
   $('count').textContent = `${s.owned} / ${s.total} collected`;
   $('percent').textContent = `${s.percent}%`;
   $('wantedCount').textContent = `${s.wanted} wanted`;
@@ -66,7 +79,7 @@ function check(p, flag, label) {
   input.setAttribute('aria-label', `${label}: ${p.name} #${pad(p.dexNumber)}`);
   input.addEventListener('change', () => {
     collection = setFlag(collection, p.id, flag, input.checked);
-    saveCollection(collection);
+    saveProfileCollection(profiles.activeId, collection);
     renderStats();
     renderList();
   });
@@ -95,8 +108,25 @@ $('clear').addEventListener('click', () => {
   search.focus();
 });
 filterSel.addEventListener('change', () => { view.filter = filterSel.value; renderList(); });
+regionSel.addEventListener('change', () => { view.region = regionSel.value; renderStats(); renderList(); });
+profileSel.addEventListener('change', () => {
+  profiles = switchProfile(profiles, profileSel.value);
+  collection = loadProfileCollection(profiles.activeId);
+  renderStats();
+  renderList();
+});
+$('newProfile').addEventListener('click', () => {
+  const name = window.prompt('Name for the new collection:');
+  if (name === null) return;
+  profiles = createProfile(profiles, name);
+  collection = loadProfileCollection(profiles.activeId);
+  renderProfiles();
+  renderStats();
+  renderList();
+});
 sortSel.addEventListener('change', () => { view.sort = sortSel.value; renderList(); });
 
+renderProfiles();
 renderStats();
 renderList();
 

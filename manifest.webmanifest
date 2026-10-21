@@ -1,6 +1,6 @@
 {
-  "name": "Kanto 151 Tracker",
-  "short_name": "Kanto 151",
+  "name": "Pokémon Tracker",
+  "short_name": "Pokémon Tracker",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

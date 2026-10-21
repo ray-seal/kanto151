@@ -20,10 +20,10 @@ export function matchesSearch(p, query) {
   return p.name.toLowerCase().includes(q);
 }
 
-export function applyView(pokemon, collection, { query = '', filter = 'all', sort = 'dex' } = {}) {
+export function applyView(pokemon, collection, { query = '', filter = 'all', sort = 'dex', region = 'all' } = {}) {
   const f = FILTERS[filter] || FILTERS.all;
   const s = SORTS[sort] || SORTS.dex;
   return pokemon
-    .filter((p) => matchesSearch(p, query) && f.test(getStatus(collection, p.id)))
+    .filter((p) => (region === 'all' || p.region === region) && matchesSearch(p, query) && f.test(getStatus(collection, p.id)))
     .sort(s.compare);
 }
