@@ -1,8 +1,8 @@
 :root { --bg:#f6f7f9; --fg:#1a1d21; --muted:#4a5260; --line:#d5d9e0; --accent:#1d4ed8; --own:#e6f6ea; --ownfg:#14532d; }
 * { box-sizing: border-box; }
-body { margin:0; font:16px/1.4 system-ui,sans-serif; background:var(--bg); color:var(--fg); }
+body { margin:0; padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); font:16px/1.4 system-ui,sans-serif; background:var(--bg); color:var(--fg); }
 .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
-.top { position:sticky; top:0; z-index:1; background:#fff; border-bottom:1px solid var(--line); padding:.6rem 1rem; max-width:50rem; margin:0 auto; }
+.top { position:static; background:#fff; border-bottom:1px solid var(--line); padding:.6rem 1rem; max-width:50rem; margin:0 auto; }
 h1 { font-size:1.2rem; margin:0 0 .4rem; }
 .progress { display:flex; flex-wrap:wrap; gap:.25rem .75rem; align-items:center; color:var(--muted); }
 .progress strong { color:var(--fg); }
@@ -21,4 +21,5 @@ main { max-width:50rem; margin:0 auto; padding:0 1rem 2rem; }
 .check { display:flex; align-items:center; gap:.25rem; min-height:2.75rem; padding:0 .3rem; font-size:.85rem; cursor:pointer; }
 .check input { width:1.3rem; height:1.3rem; }
 .empty { text-align:center; padding:2rem; color:var(--muted); font-size:1.1rem; }
+@media (min-height:48rem) and (min-width:40rem) { .top { position:sticky; top:0; z-index:2; } }
 @media (max-width:30rem) { .badge { display:block; margin:0; } .check { flex-direction:column; gap:0; font-size:.7rem; } }
