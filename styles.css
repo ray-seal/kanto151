@@ -23,3 +23,10 @@ main { max-width:50rem; margin:0 auto; padding:0 1rem 2rem; }
 .empty { text-align:center; padding:2rem; color:var(--muted); font-size:1.1rem; }
 @media (min-height:48rem) and (min-width:40rem) { .top { position:sticky; top:0; z-index:2; } }
 @media (max-width:30rem) { .badge { display:block; margin:0; } .check { flex-direction:column; gap:0; font-size:.7rem; } }
+
+.profilebar, .regions { display:flex; gap:.5rem; align-items:center; margin:.4rem 0; }
+.profilebar label, .regions label { display:flex; gap:.5rem; align-items:center; flex:1; min-width:0; font-weight:600; }
+.profilebar select, .regions select { flex:1; min-width:0; }
+.regions select { border:2px solid var(--accent); }
+.scope { margin:.2rem 0; color:var(--muted); font-size:.9rem; }
+.note { color:var(--muted); font-size:.8rem; padding:1rem .5rem; }

@@ -6,17 +6,22 @@
   <meta name="theme-color" content="#1d4ed8">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Kanto 151">
+  <meta name="apple-mobile-web-app-title" content="Pokémon Tracker">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <title>Kanto 151 Collection Tracker</title>
+  <title>Pokémon Collection Tracker</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="top">
-    <h1>Kanto 151 Tracker</h1>
+    <h1>Pokémon Tracker</h1>
+    <div class="profilebar">
+      <label>Collection <select id="profile"></select></label>
+      <button id="newProfile" type="button">New</button>
+    </div>
+    <p id="scope" class="scope"></p>
     <div class="progress">
       <strong id="count"></strong>
       <span id="percent"></span>
@@ -28,6 +33,7 @@
       <input id="search" type="search" placeholder="Search name or number (e.g. Pikachu, 25, #025)" autocomplete="off">
       <button id="clear" type="button" hidden>Clear</button>
     </div>
+    <div class="regions" role="group" aria-label="Region"><label>Region <select id="region"></select></label></div>
     <div class="controls">
       <label>Show <select id="filter"></select></label>
       <label>Sort <select id="sort"></select></label>
@@ -36,6 +42,7 @@
   <main>
     <ul id="list" class="list"></ul>
     <p id="empty" class="empty" hidden>No Pokémon found</p>
+    <p class="note">Collections are stored on this device only and do not sync across devices. Each person sharing this browser should pick their own collection.</p>
   </main>
   <script type="module" src="src/main.js"></script>
 </body>

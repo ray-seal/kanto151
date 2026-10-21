@@ -1,4 +1,6 @@
-# Kanto 151 Collection Tracker
+# Pokémon Collection Tracker (National Pokédex, Gen I–IX)
+
+Collections are local profiles stored in this device's browser storage (no sync across devices). Pokémon data is in `src/data/pokemon.js`, sourced from PokeAPI species data.
 
 Dependency-free static app (ES modules, localStorage).
 
